@@ -51,6 +51,7 @@ class TarotResponse(BaseModel):
     query: str
     cards: list
     answer: str
+    language: str
 
 @app.get("/tarot", response_model=TarotResponse)
 async def get_tarot_reading(
@@ -93,7 +94,8 @@ async def get_tarot_reading(
             option=option,
             query=query,
             cards=model.cards,
-            answer=answer
+            answer=answer,
+            language=lang
         )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=f"Invalid input: {str(e)}")

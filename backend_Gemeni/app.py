@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 from functools import lru_cache
 import json
 from pathlib import Path
+import re
 from fastapi import FastAPI, HTTPException
 from fastapi.params import Query
 from fastapi.responses import StreamingResponse
@@ -18,6 +19,7 @@ from layout import TarotModel
 
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
+api_model = os.getenv("GEMENI_MODEL", "gemini-2.5-flash-lite")
 BASE_DIR = Path(__file__).resolve().parent
 
 if not api_key or api_key.strip() == "":
@@ -46,6 +48,7 @@ class TarotResponse(BaseModel):
     query: str
     cards: list
     answer: str
+    language: str
 
 
 app = FastAPI(lifespan=lifespan)
@@ -59,18 +62,21 @@ async def get_tarot_reading(
     try:
         model = TarotModel(option, query, data=load_card_data())
 
+        cyrillic = len(re.findall(r'[а-яА-ЯёЁ]', query))
+        language = "ru" if cyrillic > 0 else "en"
         async def event_stream():
             # Отправляем начальные данные
             initial_data = {
                 "option": option,
                 "query": query,
-                "cards": model.cards
+                "cards": model.cards,
+                "language": language
             }
             yield f"data: {json.dumps(initial_data, ensure_ascii=False)}\n\n"
             
             # Стримим ответ от Gemini
             response_stream = client.models.generate_content_stream(
-                model="gemini-2.5-flash-lite",
+                model=api_model,
                 contents=model.query,
                 config=types.GenerateContentConfig(
                     system_instruction=model.prompt
