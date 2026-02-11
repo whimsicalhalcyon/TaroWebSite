@@ -1,0 +1,15 @@
+@font-face {
+    font-family: "CormorantGaramond";
+    src: url('/src/assets/fonts/CormorantGaramond-Regular.ttf');
+    font-weight: 400;
+    font-style: normal;
+    border: none;
+}
+@font-face {
+    font-family: "CormorantGaramond-l";
+    src: url('src/assets/fonts/CormorantGaramond-Light.ttf');
+    font-weight: 100;
+    font-style: normal;
+}
+
+

@@ -1,0 +1,85 @@
+@import url('font.css');
+@import "tailwindcss";
+/*@import "base.css";*/
+
+#app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-weight: normal;
+  font-family: CormorantGaramond;
+  font-weight: 100;
+  font-size: 20px;
+}
+
+/*h1, h2, h3, h4 {*/
+/*  font-weight: 100;*/
+
+/*}*/
+
+/*.gradient-text{*/
+/*  background-image: linear-gradient(to left,#71533D, #D79D75);*/
+/*  color: transparent;*/
+/*  background-clip: text;*/
+/*  -webkit-background-clip: text;*/
+/*  font-size: 3em;*/
+/*  text-align: center;*/
+/*}*/
+
+html {
+    min-height: 100vh;
+    background:
+        radial-gradient(
+                ellipse at 50% 0%,
+                rgba(180, 120, 220, 0.35) 0%,
+                rgba(120, 40, 170, 0.45) 40%,
+                rgba(80, 10, 120, 0.9) 100%
+        ),
+        linear-gradient(
+                180deg,
+                #9a6ad6 0%,
+                #7a2cbf 35%,
+                #5a138f 65%,
+                #3b0a5f 100%
+        );
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sun-logo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 100px;
+  height: 100px;
+}
+
+.sun-logo .sun_lines {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s ease;
+  z-index: 1;
+}
+
+.sun-logo .sun_face {
+  position: absolute;
+  width: 40%;
+  height: 40%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.sun-logo:hover .sun_lines {
+  transform: rotate(360deg);
+}
+
